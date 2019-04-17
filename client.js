@@ -60,6 +60,7 @@ function processEmployees(employees) {
  * @param {string} employeeData.employeeNumber
  * @param {string} employeeData.annualSalary
  * @param {number} employeeData.reviewRating
+ * @returns {object} - containing new employee calculations
  */
 function calculateForEmployee(employeeData) {
   const bonusPctNum = calculateEmployeeBonusPct(
@@ -71,10 +72,14 @@ function calculateForEmployee(employeeData) {
     employeeData.annualSalary,
     bonusPctNum
   );
+  const totalCompensation = calculateTotalCompentsation(
+    employeeData.annualSalary,
+    totalBonus
+  );
   const employeeCalculations = {
     name: employeeData.name,
     bonusPercentage: `${bonusPctNum}%`,
-    totalCompensation: null,
+    totalCompensation,
     totalBonus,
   };
 
@@ -86,6 +91,7 @@ function calculateForEmployee(employeeData) {
  * @param {number} rating
  * @param {string} employeeNmuber
  * @param {string} currentSalary
+ * @returns {number} - integer value for the bonus percentage
  */
 function calculateEmployeeBonusPct(rating, employeeNmuber, currentSalary) {
   console.log('rating', rating);
@@ -114,7 +120,8 @@ function calculateEmployeeBonusPct(rating, employeeNmuber, currentSalary) {
 
 /**
  * Check to see if the employee has been 
- * @param {string} employeeNumber 
+ * @param {string} employeeNumber
+ * @returns {number} 
  */
 function getSeniorityBonusPct(employeeNumber) {
   const numOfCharacters = employeeNumber.length;
@@ -130,6 +137,7 @@ function getSeniorityBonusPct(employeeNumber) {
  * Validate the bonusPct and reset if necessary.
  * @param {number} bonusPct
  * @param {string} currentSalary
+ * @returns {number}
  */
 function restrictBonusPct(bonusPct, currentSalary) {
   console.log('currentSalary', currentSalary);
@@ -154,8 +162,9 @@ function restrictBonusPct(bonusPct, currentSalary) {
 
 /**
  * Calculate for the salary bonus adjustment value that will be added to the annual salary.
- * @param {string} salary 
- * @param {number} bonus 
+ * @param {string} salary
+ * @param {number} bonus
+ * @returns {number}
  */
 function calculateBonusSalaryAdjustment(salary, bonus) {
   const bonusFraction = bonus / 100;
@@ -164,6 +173,19 @@ function calculateBonusSalaryAdjustment(salary, bonus) {
 
   bonusAdjustment = Math.round(bonusAdjustment);
   return bonusAdjustment;
+}
+
+/**
+ * Calculate the new total compensation with the total bonus added to the salary.
+ * @param {string} salary
+ * @param {number} bonusTotal
+ * @returns {number}
+ */
+function calculateTotalCompentsation(salary, bonusTotal) {
+  const salaryAsNumber = salary * 1;
+  const totalCompensation = salaryAsNumber + bonusTotal;
+
+  return totalCompensation;
 }
 
 // Take small steps! Don't write a for loop and two functions that do all of the calculations right away.
