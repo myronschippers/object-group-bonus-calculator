@@ -48,8 +48,28 @@ function processEmployees(employees) {
   console.log('Processing Employees ......');
   for (let i = 0; i < employees.length; i++) {
     const indvEmployee = employees[i];
-    console.log(indvEmployee);
+    console.log(calculateForEmployee(indvEmployee));
   }
+}
+
+/**
+ * Make all function calls needed in order to calculate the employee's
+ * 'bonusPercentage', 'totalCompensation', & 'totalBonus'.
+ * @param {object} employeeData
+ * @param {string} employeeData.name
+ * @param {string} employeeData.employeeNumber
+ * @param {string} employeeData.annualSalary
+ * @param {number} employeeData.reviewRating
+ */
+function calculateForEmployee(employeeData) {
+  const employeeCalculations = {
+    name: employeeData.name,
+    bonusPercentage: null,
+    totalCompensation: null,
+    totalBonus: null,
+  };
+
+  return employeeCalculations;
 }
 
 // Take small steps! Don't write a for loop and two functions that do all of the calculations right away.
