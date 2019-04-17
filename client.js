@@ -33,6 +33,8 @@ const employees = [
 
 // YOU SHOULD NOT NEED TO CHANGE ANYTHING ABOVE THIS POINT
 
+$(document).ready(domReady);
+
 /**
  * Loop over the `employees` array and do the following:
  * - use each employee object as the input to a function that will calculate for that employee
@@ -186,6 +188,24 @@ function calculateTotalCompentsation(salary, bonusTotal) {
   const totalCompensation = salaryAsNumber + bonusTotal;
 
   return totalCompensation;
+}
+
+let $CURR_EMPLOYEE_LIST;
+let $ADJUSTED_EMPLOYEE_LIST;
+let $ADJUSTED_SALARY_BTN;
+/**
+ * Bind event handlers and capture dom elements needed.
+ */
+function domReady() {
+  $CURR_EMPLOYEE_LIST = $('.js-currentEmployees');
+  $ADJUSTED_EMPLOYEE_LIST = $('.js-adjustedEmployees');
+  $ADJUSTED_SALARY_BTN = $('.js-adjustSalary');
+
+  $ADJUSTED_SALARY_BTN.on('click', onClickAdjustSalary);
+}
+
+function onClickAdjustSalary(eventObj) {
+  // start calculations for salary adjustments
 }
 
 // Take small steps! Don't write a for loop and two functions that do all of the calculations right away.
