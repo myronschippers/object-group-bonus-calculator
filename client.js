@@ -62,7 +62,10 @@ function processEmployees(employees) {
  * @param {number} employeeData.reviewRating
  */
 function calculateForEmployee(employeeData) {
-  const bonusPctNum = calculateEmployeeBonusPct(employeeData.reviewRating);
+  const bonusPctNum = calculateEmployeeBonusPct(
+    employeeData.reviewRating,
+    employeeData.employeeNumber
+  );
   const employeeCalculations = {
     name: employeeData.name,
     bonusPercentage: `${bonusPctNum}%`,
@@ -79,7 +82,9 @@ function calculateForEmployee(employeeData) {
  * @param {string} employeeNmuber
  * @param {string} currentSalary
  */
-function calculateEmployeeBonusPct(rating) {
+function calculateEmployeeBonusPct(rating, employeeNmuber) {
+  console.log('rating', rating);
+  const seniorityBonusPct = getSeniorityBonusPct(employeeNmuber);
   let bonusPct;
   switch (rating) {
     case 3:
@@ -94,8 +99,24 @@ function calculateEmployeeBonusPct(rating) {
     default:
       bonusPct = 0;
   }
+  console.log('bonusPct (before seniority)', bonusPct);
+  bonusPct += seniorityBonusPct;
 
   return bonusPct;
+}
+
+/**
+ * Check to see if the employee has been 
+ * @param {string} employeeNumber 
+ */
+function getSeniorityBonusPct(employeeNumber) {
+  const numOfCharacters = employeeNumber.length;
+  console.log('numOfCharacters', numOfCharacters);
+  if (numOfCharacters >= 4) { // signifies employee has been with company more than 15 years
+    return 5; // pct 
+  }
+
+  return 0;
 }
 
 // Take small steps! Don't write a for loop and two functions that do all of the calculations right away.
