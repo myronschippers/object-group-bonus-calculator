@@ -62,14 +62,40 @@ function processEmployees(employees) {
  * @param {number} employeeData.reviewRating
  */
 function calculateForEmployee(employeeData) {
+  const bonusPctNum = calculateEmployeeBonusPct(employeeData.reviewRating);
   const employeeCalculations = {
     name: employeeData.name,
-    bonusPercentage: null,
+    bonusPercentage: `${bonusPctNum}%`,
     totalCompensation: null,
     totalBonus: null,
   };
 
   return employeeCalculations;
+}
+
+/**
+ * Calculate the bonus percent that the employee is supposed to get.
+ * @param {number} rating
+ * @param {string} employeeNmuber
+ * @param {string} currentSalary
+ */
+function calculateEmployeeBonusPct(rating) {
+  let bonusPct;
+  switch (rating) {
+    case 3:
+      bonusPct = 4;
+      break;
+    case 4:
+      bonusPct = 6;
+      break;
+    case 5:
+      bonusPct = 10;
+      break;
+    default:
+      bonusPct = 0;
+  }
+
+  return bonusPct;
 }
 
 // Take small steps! Don't write a for loop and two functions that do all of the calculations right away.
