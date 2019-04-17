@@ -64,13 +64,18 @@ function processEmployees(employees) {
 function calculateForEmployee(employeeData) {
   const bonusPctNum = calculateEmployeeBonusPct(
     employeeData.reviewRating,
-    employeeData.employeeNumber
+    employeeData.employeeNumber,
+    employeeData.annualSalary
+  );
+  const totalBonus = calculateBonusSalaryAdjustment(
+    employeeData.annualSalary,
+    bonusPctNum
   );
   const employeeCalculations = {
     name: employeeData.name,
     bonusPercentage: `${bonusPctNum}%`,
     totalCompensation: null,
-    totalBonus: null,
+    totalBonus,
   };
 
   return employeeCalculations;
@@ -82,7 +87,7 @@ function calculateForEmployee(employeeData) {
  * @param {string} employeeNmuber
  * @param {string} currentSalary
  */
-function calculateEmployeeBonusPct(rating, employeeNmuber) {
+function calculateEmployeeBonusPct(rating, employeeNmuber, currentSalary) {
   console.log('rating', rating);
   const seniorityBonusPct = getSeniorityBonusPct(employeeNmuber);
   let bonusPct;
@@ -102,6 +107,8 @@ function calculateEmployeeBonusPct(rating, employeeNmuber) {
   console.log('bonusPct (before seniority)', bonusPct);
   bonusPct += seniorityBonusPct;
 
+  bonusPct = restrictBonusPct(bonusPct, currentSalary);
+
   return bonusPct;
 }
 
@@ -117,6 +124,46 @@ function getSeniorityBonusPct(employeeNumber) {
   }
 
   return 0;
+}
+
+/**
+ * Validate the bonusPct and reset if necessary.
+ * @param {number} bonusPct
+ * @param {string} currentSalary
+ */
+function restrictBonusPct(bonusPct, currentSalary) {
+  console.log('currentSalary', currentSalary);
+  console.log('bonusPct', bonusPct);
+  let restrictedBonusPct = bonusPct;
+  const currSalaryAsNum = currentSalary * 1;
+  const salaryCap = 6500;
+
+  if (currSalaryAsNum > salaryCap) {
+    restrictedBonusPct = bonusPct - 1;
+  }
+
+  if (bonusPct < 0) {
+    restrictedBonusPct = 0;
+  } else if (bonusPct > 13) {
+    restrictedBonusPct = 13;
+  }
+  console.log('restrictedBonusPct', restrictedBonusPct);
+
+  return restrictedBonusPct;
+}
+
+/**
+ * Calculate for the salary bonus adjustment value that will be added to the annual salary.
+ * @param {string} salary 
+ * @param {number} bonus 
+ */
+function calculateBonusSalaryAdjustment(salary, bonus) {
+  const bonusFraction = bonus / 100;
+  const salaryAsNumber = salary * 1;
+  let bonusAdjustment = salaryAsNumber * bonusFraction;
+
+  bonusAdjustment = Math.round(bonusAdjustment);
+  return bonusAdjustment;
 }
 
 // Take small steps! Don't write a for loop and two functions that do all of the calculations right away.
