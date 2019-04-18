@@ -202,10 +202,25 @@ function domReady() {
   $ADJUSTED_SALARY_BTN = $('.js-adjustSalary');
 
   $ADJUSTED_SALARY_BTN.on('click', onClickAdjustSalary);
+
+  displayEmployeesList($CURR_EMPLOYEE_LIST, employees);
 }
 
 function onClickAdjustSalary(eventObj) {
   // start calculations for salary adjustments
+}
+
+function displayEmployeesList($listElem, employees, configDisplay) {
+  $listElem.empty();
+  for (let indvEmployee of employees) {
+    const $employeeElem = $(`<li class="employeeTile">
+                              <h3 class="employeeTile-hdg">Employee Status</h3>
+                              <div class="employeeTile-name">${indvEmployee.name}</div>
+                              <div class="employeeTile-data">
+                              </div>
+                            </li>`);
+    $listElem.append($employeeElem);
+  }
 }
 
 // Take small steps! Don't write a for loop and two functions that do all of the calculations right away.
