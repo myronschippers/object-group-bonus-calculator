@@ -216,15 +216,16 @@ function onClickAdjustSalary(eventObj) {
   // start calculations for salary adjustments
 }
 
-function displayEmployeesList($listElem, employees, configDisplay) {
+function displayEmployeesList($listElem, employees, displayConfig) {
   $listElem.empty();
   for (let indvEmployee of employees) {
     const $employeeElem = $('<li class="employeeTile"></li>');
     $listElem.append($employeeElem);
     $employeeElem.append('<h3 class="employeeTile-hdg">Employee Status</h3>');
 
-    for (let i = 0; i < configDisplay.length; i++) {
-      $employeeElem.append(`<div class="employeeTile-name">${configDisplay[i]}</div>`);
+    for (let i = 0; i < displayConfig.length; i++) {
+      const propKey = displayConfig[i];
+      $employeeElem.append(`<div class="employeeTile-name">${indvEmployee[propKey]}</div>`);
     }
   }
 }
