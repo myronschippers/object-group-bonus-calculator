@@ -203,7 +203,13 @@ function domReady() {
 
   $ADJUSTED_SALARY_BTN.on('click', onClickAdjustSalary);
 
-  displayEmployeesList($CURR_EMPLOYEE_LIST, employees);
+  const configProps = [
+    'name',
+    'employeeNumber',
+    'annualSalary',
+    'reviewRating',
+  ];
+  displayEmployeesList($CURR_EMPLOYEE_LIST, employees, configProps);
 }
 
 function onClickAdjustSalary(eventObj) {
@@ -213,13 +219,13 @@ function onClickAdjustSalary(eventObj) {
 function displayEmployeesList($listElem, employees, configDisplay) {
   $listElem.empty();
   for (let indvEmployee of employees) {
-    const $employeeElem = $(`<li class="employeeTile">
-                              <h3 class="employeeTile-hdg">Employee Status</h3>
-                              <div class="employeeTile-name">${indvEmployee.name}</div>
-                              <div class="employeeTile-data">
-                              </div>
-                            </li>`);
+    const $employeeElem = $('<li class="employeeTile"></li>');
     $listElem.append($employeeElem);
+    $employeeElem.append('<h3 class="employeeTile-hdg">Employee Status</h3>');
+
+    for (let i = 0; i < configDisplay.length; i++) {
+      $employeeElem.append(`<div class="employeeTile-name">${configDisplay[i]}</div>`);
+    }
   }
 }
 
